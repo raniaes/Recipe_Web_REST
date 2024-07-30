@@ -5,6 +5,7 @@ using Recipe_web_rest.Dto;
 using Recipe_web_rest.Interfaces;
 using Recipe_web_rest.Models;
 using Recipe_web_rest.Repository;
+using Recipe_web_rest.Request;
 
 namespace Recipe_web_rest.Controllers
 {
@@ -29,7 +30,7 @@ namespace Recipe_web_rest.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Recipe>))]
         public IActionResult GetRecipes() 
         {
-            var recipes = _mapper.Map<List<RecipeDto>>(_recipeRepository.GetRecipes());
+            var recipes = _mapper.Map<List<RecipeList>>(_recipeRepository.GetRecipes());
 
             if (!ModelState.IsValid)
             {
@@ -160,6 +161,51 @@ namespace Recipe_web_rest.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("search/{searchname}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Recipe>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetSearch(string searchname)
+        {
+            var recipes = _mapper.Map<List<RecipeList>>(_recipeRepository.GetSearch(searchname));
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(recipes);
+        }
+
+        [HttpGet("filter/{categoryName}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Recipe>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetFilter(string categoryName)
+        {
+            var recipes = _mapper.Map<List<RecipeList>>(_recipeRepository.GetFilter(categoryName));
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(recipes);
+        }
+
+        [HttpGet("filter_search/{categoryName}/{searchname}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Recipe>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetFilter_Search(string categoryName, string searchname)
+        {
+            var filter_recipes = _mapper.Map<List<RecipeList>>(_recipeRepository.GetFilter_Searcch(categoryName, searchname));
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(filter_recipes);
         }
     }
 }
