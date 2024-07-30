@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Recipe_web_rest.Dto;
 using Recipe_web_rest.Models;
+using Recipe_web_rest.Request;
 
 namespace Recipe_web_rest.Helper
 {
@@ -10,6 +11,8 @@ namespace Recipe_web_rest.Helper
         {
             CreateMap<Recipe, RecipeDto>();
             CreateMap<RecipeDto, Recipe>();
+            CreateMap<Recipe, RecipeList>();
+            CreateMap<RecipeList, Recipe>();
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
             CreateMap<Category, CategoryDto>();
