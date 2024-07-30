@@ -55,7 +55,7 @@ namespace Recipe_web_rest.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public IActionResult CreateUser([FromBody] UserDto userCreate)
