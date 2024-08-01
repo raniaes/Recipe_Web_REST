@@ -25,6 +25,12 @@ namespace Recipe_web_rest.Repository
             return Save();
         }
 
+        public ICollection<Ingredient> GetIngrebyRecipeId(int recipeId)
+        {
+            var result = _context.Recipe_Ingredients.Where(ri => ri.RecipeId == recipeId).Select(ri => ri.Ingredient).ToList();
+            return result;
+        }
+
         public Ingredient GetIngredient(int id)
         {
             return _context.Ingredients.Where(I => I.Id == id).FirstOrDefault();

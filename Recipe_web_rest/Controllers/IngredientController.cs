@@ -12,11 +12,13 @@ namespace Recipe_web_rest.Controllers
     public class IngredientController : Controller
     {
         private readonly IIngredientRepository _ingredientRepository;
+        private readonly IRecipeRepository _recipeRepository;
         private readonly IMapper _mapper;
 
-        public IngredientController(IIngredientRepository ingredientRepository, IMapper mapper)
+        public IngredientController(IIngredientRepository ingredientRepository, IRecipeRepository recipeRepository, IMapper mapper)
         {
             _ingredientRepository = ingredientRepository;
+            _recipeRepository = recipeRepository;
             _mapper = mapper;
         }
 
@@ -44,6 +46,25 @@ namespace Recipe_web_rest.Controllers
                 return NotFound();
             }
             var ingredient = _mapper.Map<IngredientDto>(_ingredientRepository.GetIngredient(ingredientId));
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(ingredient);
+        }
+
+        [HttpGet("{recipeId}/ingredient")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Ingredient>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetIngrebyRecipeId(int recipeId)
+        {
+            if (!_recipeRepository.RecipeExists(recipeId))
+            {
+                return NotFound();
+            }
+            var ingredient = _mapper.Map< List<IngredientDto>>(_ingredientRepository.GetIngrebyRecipeId(recipeId));
 
             if (!ModelState.IsValid)
             {

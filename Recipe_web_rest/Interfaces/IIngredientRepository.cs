@@ -6,6 +6,7 @@ namespace Recipe_web_rest.Interfaces
     {
         ICollection<Ingredient> GetIngredients();
         Ingredient GetIngredient(int id);
+        ICollection<Ingredient> GetIngrebyRecipeId(int recipeId);
         bool IngredientExists(int id);
         bool CreateIngredient(Ingredient ingredient);
         bool Save();
