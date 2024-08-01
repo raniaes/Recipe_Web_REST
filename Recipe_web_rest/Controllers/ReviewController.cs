@@ -12,11 +12,13 @@ namespace Recipe_web_rest.Controllers
     public class ReviewController : Controller
     {
         private readonly IReviewRepository _reviewRepository;
+        private readonly IRecipeRepository _recipeRepository;
         private readonly IMapper _mapper;
 
-        public ReviewController(IReviewRepository reviewRepository, IMapper mapper)
+        public ReviewController(IReviewRepository reviewRepository, IRecipeRepository recipeRepository, IMapper mapper)
         {
             _reviewRepository = reviewRepository;
+            _recipeRepository = recipeRepository;
             _mapper = mapper;
         }
 
@@ -44,6 +46,44 @@ namespace Recipe_web_rest.Controllers
                 return NotFound();
             }
             var review = _mapper.Map<ReviewDto>(_reviewRepository.GetReview(reviewId));
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(review);
+        }
+
+        [HttpGet("{recipeId}/review")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Review>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetReivewsbyRecipeId(int recipeId)
+        {
+            if (!_recipeRepository.RecipeExists(recipeId))
+            {
+                return NotFound();
+            }
+            var review = _mapper.Map<List<ReviewDto>>(_reviewRepository.GetReivewsbyRecipeId(recipeId));
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(review);
+        }
+
+        [HttpGet("{recipeId}/{userId}/review")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Review>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetReivewsbyRecipeId_userId(int recipeId, int userId)
+        {
+            if (!(_recipeRepository.RecipeExists(recipeId) || _recipeRepository.RecipeExists(userId)))
+            {
+                return NotFound();
+            }
+            var review = _mapper.Map<List<ReviewDto>>(_reviewRepository.GetReivewsbyRecipeId_userId(recipeId, userId));
 
             if (!ModelState.IsValid)
             {
