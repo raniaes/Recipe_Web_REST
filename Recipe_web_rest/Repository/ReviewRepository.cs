@@ -27,12 +27,12 @@ namespace Recipe_web_rest.Repository
 
         public ICollection<Review> GetReivewsbyRecipeId(int recipeId)
         {
-            return _context.Reviews.Where(r => r.RecipeId == recipeId).ToList();
+            return _context.Reviews.Where(r => r.RecipeId == recipeId).OrderByDescending(r => r.Date).ToList();
         }
 
         public ICollection<Review> GetReivewsbyRecipeId_userId(int recipeId, int userId)
         {
-            return _context.Reviews.Where(r => r.RecipeId == recipeId && r.UserId == userId).ToList();
+            return _context.Reviews.Where(r => r.RecipeId == recipeId && r.UserId == userId).OrderByDescending(r => r.Date).ToList();
         }
 
         public Review GetReview(int id)
