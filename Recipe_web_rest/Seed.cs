@@ -17,7 +17,7 @@ namespace Recipe_web_rest
             {
                 var review = new Review()
                 {
-                    Title = "good rice", Content = "really taste", Rating = 5
+                    Date = DateTime.Today , Content = "really taste", Rating = 5
                 };
 
                 var recipes = new List<Recipe>()
