@@ -88,8 +88,8 @@ namespace Recipe_web_rest.Repository
             {
                 var recipe_ingredient = new Recipe_Ingredient()
                 {
-                    Recipe = recipe,
-                    Ingredient = ingredient
+                    RecipeId = recipe.Id,
+                    IngredientId = ingredient.Id
                 };
                 _dataContext.Add(recipe_ingredient);
             }
