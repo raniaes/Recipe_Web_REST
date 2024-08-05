@@ -36,13 +36,13 @@ namespace Recipe_web_rest.Data
                 .HasOne(r => r.User)
                 .WithMany(u => u.Reviews)
                 .HasForeignKey(r => r.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Recipe)
                 .WithMany(rec => rec.Reviews)
                 .HasForeignKey(r => r.RecipeId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

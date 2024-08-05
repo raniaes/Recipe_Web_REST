@@ -27,7 +27,6 @@ namespace Recipe_web_rest.Controllers
             _userRepository = userRepository;
             _mapper = mapper;
             _environment = environment;
-
         }
 
         [HttpGet]
@@ -63,6 +62,21 @@ namespace Recipe_web_rest.Controllers
 
             return Ok(recipe);
         }
+
+        [HttpGet("images/{fileName}")]
+        public IActionResult GetImage(string fileName)
+        {
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", fileName);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound();
+            }
+
+            var fileBytes = System.IO.File.ReadAllBytes(filePath);
+            return File(fileBytes, "image/jpeg");
+        }
+
 
         [HttpPost]
         [ProducesResponseType(204)]
@@ -215,7 +229,7 @@ namespace Recipe_web_rest.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
 
-        public IActionResult DeleteCategory(int recipeId)
+        public IActionResult DeleteRecipe(int recipeId)
         {
             if (!_recipeRepository.RecipeExists(recipeId))
             {
@@ -226,6 +240,22 @@ namespace Recipe_web_rest.Controllers
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var pic_name = "";
+            int lastindex = recipeToDelete.Pic_address.LastIndexOf('\');
+            if (lastindex >= 0)
+            {
+                pic_name = recipeToDelete.Pic_address.Substring(lastindex + 1);
+            }
+
+            if (!string.IsNullOrEmpty(pic_name))
+            {
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", pic_name);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
 
             if (!_recipeRepository.DeleteRecipe(recipeToDelete))
             {
