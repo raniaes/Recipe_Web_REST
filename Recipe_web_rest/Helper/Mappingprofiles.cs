@@ -13,6 +13,8 @@ namespace Recipe_web_rest.Helper
             CreateMap<RecipeDto, Recipe>();
             CreateMap<Recipe, RecipeList>();
             CreateMap<RecipeList, Recipe>();
+            CreateMap<Recipe, RecipeCreate>();
+            CreateMap<RecipeCreate, Recipe>();
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
             CreateMap<Category, CategoryDto>();
