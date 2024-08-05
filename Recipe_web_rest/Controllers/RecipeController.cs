@@ -17,13 +17,17 @@ namespace Recipe_web_rest.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public RecipeController(IRecipeRepository recipeRepository, IUserRepository userRepository, ICategoryRepository categoryRepository, IMapper mapper)
+        public RecipeController(IRecipeRepository recipeRepository, IUserRepository userRepository,
+            ICategoryRepository categoryRepository, IMapper mapper, IWebHostEnvironment env)
         {
             _recipeRepository = recipeRepository;
             _categoryRepository = categoryRepository;
             _userRepository = userRepository;
             _mapper = mapper;
+            _webHostEnvironment = env;
+
         }
 
         [HttpGet]
@@ -59,6 +63,21 @@ namespace Recipe_web_rest.Controllers
 
             return Ok(recipe);
         }
+
+        [HttpGet("images/{fileName}")]
+        public IActionResult GetImage(string fileName)
+        {
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", fileName);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound();
+            }
+
+            var fileBytes = System.IO.File.ReadAllBytes(filePath);
+            return File(fileBytes, "image/jpeg");
+        }
+
 
         [HttpPost]
         [ProducesResponseType(204)]
@@ -154,6 +173,22 @@ namespace Recipe_web_rest.Controllers
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var pic_name = "";
+            int lastindex = recipeToDelete.Pic_address.LastIndexOf('|');
+            if (lastindex >= 0)
+            {
+                pic_name = recipeToDelete.Pic_address.Substring(lastindex + 1);
+            }
+
+            if (!string.IsNullOrEmpty(pic_name))
+            {
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", pic_name);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
 
             if (!_recipeRepository.DeleteRecipe(recipeToDelete))
             {
