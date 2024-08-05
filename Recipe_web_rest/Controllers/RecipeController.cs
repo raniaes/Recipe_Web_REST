@@ -66,7 +66,7 @@ namespace Recipe_web_rest.Controllers
         [HttpGet("images/{fileName}")]
         public IActionResult GetImage(string fileName)
         {
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", fileName);
+            var filePath = Path.Combine(_environment.WebRootPath, "upload", fileName);
 
             if (!System.IO.File.Exists(filePath))
             {
@@ -242,7 +242,7 @@ namespace Recipe_web_rest.Controllers
                 return BadRequest(ModelState);
 
             var pic_name = "";
-            int lastindex = recipeToDelete.Pic_address.LastIndexOf('\');
+            int lastindex = recipeToDelete.Pic_address.LastIndexOf('\\');
             if (lastindex >= 0)
             {
                 pic_name = recipeToDelete.Pic_address.Substring(lastindex + 1);
@@ -250,7 +250,7 @@ namespace Recipe_web_rest.Controllers
 
             if (!string.IsNullOrEmpty(pic_name))
             {
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", pic_name);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", pic_name);
                 if (System.IO.File.Exists(filePath))
                 {
                     System.IO.File.Delete(filePath);
