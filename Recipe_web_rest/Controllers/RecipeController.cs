@@ -44,7 +44,7 @@ namespace Recipe_web_rest.Controllers
         }
 
         [HttpGet("{RecipeId}")]
-        [ProducesResponseType(200, Type = typeof(Recipe))]
+        [ProducesResponseType(200, Type = typeof(RecipeImageDto))]
         [ProducesResponseType(400)]
         public IActionResult GetRecipe(int RecipeId)
         {
@@ -53,11 +53,26 @@ namespace Recipe_web_rest.Controllers
                 return NotFound();
             }
 
-            var recipe = _mapper.Map<RecipeDto>(_recipeRepository.GetRecipe(RecipeId));
+            var recipe = _mapper.Map<RecipeImageDto>(_recipeRepository.GetRecipe(RecipeId));
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            var fileName = Path.GetFileName(recipe.Pic_address);
+            var imagePath = Path.Combine(_environment.WebRootPath, "upload", fileName);
+          
+            if (System.IO.File.Exists(imagePath))
+            {
+                //recipe.ImageData = System.IO.File.ReadAllBytes(imagePath);
+
+                var imageBytes = System.IO.File.ReadAllBytes(imagePath);
+                recipe.ImageData = Convert.ToBase64String(imageBytes);
+            }
+            else
+            {
+                recipe.ImageData = null;
             }
 
             return Ok(recipe);

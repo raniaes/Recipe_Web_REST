@@ -23,6 +23,9 @@ namespace Recipe_web_rest.Helper
             CreateMap<Ingredient, IngredientDto>();
             CreateMap<Review, ReviewDto>();
             CreateMap<ReviewDto, Review>();
+
+            CreateMap<Recipe, RecipeImageDto>();
+            CreateMap<RecipeImageDto, Recipe>();
         }
     }
 }
