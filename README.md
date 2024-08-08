@@ -7,12 +7,12 @@ Additionally, the APIs are customized to suit the specific data requirements of 
 Moreover, this program is a team project developed by two people, and the APIs created by the author are listed in the endpoints below.
 
 ## Structure
-1. Category:
-2. Ingredient:
-3. Recipe:
-4. Review:
-5. User:
-6. Recipe_Ingredient:
+1. Category: This is the model for food categories, such as dinner, lunch, breakfast, dessert, etc.
+2. Ingredient: This is the model for food ingredients, such as rice, water, apples, etc.
+3. Recipe: This is the model for food redipe, such as cream pasta, miso soup, taco, etc.
+4. Review: This is the model for food reviews, where each user's food ratings and comments are stored.
+5. User: This is the model for user data.
+6. Recipe_Ingredient: This model establishes a many-to-many relationship between the recipe model and the ingredient model.
 
 ![Description of Image](/dbDIagram.png)   
 
