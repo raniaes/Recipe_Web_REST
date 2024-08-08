@@ -24,3 +24,11 @@ The base URL is https://localhost:7230/api/, and it is currently running locally
 ### Endpoints
 
 #### Get All Category
+**Endpoint:** `GET /api/Category`
+
+**Description:** Get all recipe
+
+#### Post Category
+**Endpoint:** `POST /api/Category`
+
+**Description:** Create recipe
