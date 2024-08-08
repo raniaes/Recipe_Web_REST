@@ -4,9 +4,9 @@
 This program is a dedicated REST API for a recipe web application built using the .NET Entity Framework. 
 These APIs handle client requests to a Microsoft SQL Server database to Get (Read), Post (Create), Put (Update), and Delete (Delete) data. 
 Additionally, the APIs are customized to suit the specific data requirements of the recipe web application, ensuring efficient and accurate data management.
-Moreover, this program is a team project developed by two people, and the APIs created by the author are listed in the endpoints below.
+Moreover, the contributions of the team members to this program are detailed in the Endpoints section below.
 
-## Structure
+## Model Structure
 1. Category: This is the model for food categories, such as dinner, lunch, breakfast, dessert, etc.
 2. Ingredient: This is the model for food ingredients, such as rice, water, apples, etc.
 3. Recipe: This is the model for food redipe, such as cream pasta, miso soup, taco, etc.
@@ -33,6 +33,18 @@ The base URL is https://localhost:7230/api/, and it is currently running locally
 - **Endpoint:** `POST /api/Category`  
 - **Description:** Create a new category.
 
+**3. Get Category By ID**  
+- **Endpoint:** `GET /api/Category/{categoryId}`  
+- **Description:** Retrieve a specific category by its ID.
+
+**4. Update Category**  
+- **Endpoint:** `PUT /api/Category/{categoryId}`  
+- **Description:** Update an existing category by its ID.
+
+**5. Delete Category**  
+- **Endpoint:** `DELETE /api/Category/{categoryId}`  
+- **Description:** Delete a specific category by its ID.
+
 #### Ingredient
 
 **1. Get All Ingredients**  
@@ -41,7 +53,23 @@ The base URL is https://localhost:7230/api/, and it is currently running locally
 
 **2. Create Ingredient**  
 - **Endpoint:** `POST /api/Ingredient`  
-- **Description:** Add a new ingredient.
+- **Description:** Create a new ingredient.
+
+**3. Get Ingredient By ID**  
+- **Endpoint:** `GET /api/Ingredient/{ingredientId}`  
+- **Description:** Retrieve a specific ingredient by its ID.
+
+**4. Update Ingredient**  
+- **Endpoint:** `PUT /api/Ingredient/{ingredientId}`  
+- **Description:** Update an existing ingredient by its ID.
+
+**5. Delete Ingredient**  
+- **Endpoint:** `DELETE /api/Ingredient/{ingredientId}`  
+- **Description:** Delete a specific ingredient by its ID.
+
+**6. Get Ingredients By recipeID** 
+- **Endpoint:** `GET /api/Ingredient/{recipeId}/ingredient`  
+- **Description:** Retrieve a specific ingredients by recipeID.
 
 #### Recipe
 
@@ -49,21 +77,33 @@ The base URL is https://localhost:7230/api/, and it is currently running locally
 - **Endpoint:** `GET /api/Recipe`  
 - **Description:** Retrieve all recipes.
 
-**2. Get Recipe By ID**  
-- **Endpoint:** `GET /api/Recipe/{id}`  
-- **Description:** Retrieve a specific recipe by its ID.
-
-**3. Create Recipe**  
+**2. Create Recipe**  
 - **Endpoint:** `POST /api/Recipe`  
 - **Description:** Create a new recipe.
 
+**3. Get Recipe By ID**  
+- **Endpoint:** `GET /api/Recipe/{RecipeId}`  
+- **Description:** Retrieve a specific recipe by its ID.
+
 **4. Update Recipe**  
-- **Endpoint:** `PUT /api/Recipe/{id}`  
+- **Endpoint:** `PUT /api/Recipe/{recipeId}`  
 - **Description:** Update an existing recipe by its ID.
 
 **5. Delete Recipe**  
-- **Endpoint:** `DELETE /api/Recipe/{id}`  
+- **Endpoint:** `DELETE /api/Recipe/{recipeId}`  
 - **Description:** Delete a specific recipe by its ID.
+
+**6. Get Recipes By Input Text**  
+- **Endpoint:** `GET /api/Recipe/search/{searchname}`  
+- **Description:** Retrieve a specific recipes by input text of search.
+
+**7. Get Recipes By Category Name**  
+- **Endpoint:** `GET /api/Recipe/filter/{categoryName}`  
+- **Description:** Retrieve a specific recipes by categoryName.
+
+**8. Get Recipes By Category Name & Input Text**  
+- **Endpoint:** `GET /api/Recipe/filter_search/{categoryName}/{searchname}`  
+- **Description:** Retrieve a specific recipes by categoryName & input text of search.
 
 #### Review
 
@@ -71,21 +111,29 @@ The base URL is https://localhost:7230/api/, and it is currently running locally
 - **Endpoint:** `GET /api/Review`  
 - **Description:** Retrieve all reviews.
 
-**2. Get Review By ID**  
-- **Endpoint:** `GET /api/Review/{id}`  
+**2. Create Review**  
+- **Endpoint:** `POST /api/Review`  
+- **Description:** Create a new review.
+
+**3. Get Review By ID**  
+- **Endpoint:** `GET /api/Review/{reviewId}`  
 - **Description:** Retrieve a specific review by its ID.
 
-**3. Create Review**  
-- **Endpoint:** `POST /api/Review`  
-- **Description:** Add a new review.
-
 **4. Update Review**  
-- **Endpoint:** `PUT /api/Review/{id}`  
+- **Endpoint:** `PUT /api/Review/{reviewId}`  
 - **Description:** Update an existing review by its ID.
 
 **5. Delete Review**  
-- **Endpoint:** `DELETE /api/Review/{id}`  
+- **Endpoint:** `DELETE /api/Review/{reviewId}`  
 - **Description:** Delete a specific review by its ID.
+
+**6. Get Reviews By recipeID**  
+- **Endpoint:** `GET /api/Review/{recipeId}/review`  
+- **Description:** Retrieve a specific reviews by recipeId.
+
+**7. Get Reviews By recipeID & userID**  
+- **Endpoint:** `GET /api/Review/{recipeId}/{userId}/review`  
+- **Description:** Retrieve a specific reviews by recipeId & userId.
 
 #### User
 
@@ -93,18 +141,18 @@ The base URL is https://localhost:7230/api/, and it is currently running locally
 - **Endpoint:** `GET /api/User`  
 - **Description:** Retrieve all users.
 
-**2. Get User By ID**  
-- **Endpoint:** `GET /api/User/{id}`  
-- **Description:** Retrieve a specific user by their ID.
-
-**3. Create User**  
-- **Endpoint:** `POST /api/User`  
+**2. Create User**  
+- **Endpoint:** `POST /api/User/Register`  
 - **Description:** Create a new user.
 
-**4. Update User**  
-- **Endpoint:** `PUT /api/User/{id}`  
-- **Description:** Update an existing user by their ID.
+**3. Update User**  
+- **Endpoint:** `PUT /api/User/{uId}`  
+- **Description:** Update an existing user by their userId.
 
-**5. Delete User**  
-- **Endpoint:** `DELETE /api/User/{id}`  
-- **Description:** Delete a specific user by their ID.
+**4. Delete User**  
+- **Endpoint:** `DELETE /api/User/{UserId}`  
+- **Description:** Delete a specific user by their UserId.
+
+**5. Login**  
+- **Endpoint:** `POST /api/User/Login`  
+- **Description:** Login by userId and Password.
