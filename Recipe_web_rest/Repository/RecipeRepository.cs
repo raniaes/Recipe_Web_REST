@@ -1,4 +1,5 @@
-﻿using Recipe_web_rest.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Recipe_web_rest.Data;
 using Recipe_web_rest.Interfaces;
 using Recipe_web_rest.Models;
 
@@ -37,6 +38,18 @@ namespace Recipe_web_rest.Repository
             return Save();
         }
 
+        public ICollection<Recipe> GetFilter(string categoryname)
+        {
+            return _dataContext.Recipes.Where(r => r.Category.Name == categoryname).ToList();
+        }
+
+        public ICollection<Recipe> GetFilter_Searcch(string categoryName, string word)
+        {
+            return _dataContext.Recipes
+                .Where(r => r.Category.Name == categoryName && EF.Functions.Like(r.Name, $"%{word}%"))
+                .ToList();
+        }
+
         public Recipe GetRecipe(int id)
         {
             return _dataContext.Recipes.Where(r => r.Id == id).FirstOrDefault();
@@ -45,6 +58,11 @@ namespace Recipe_web_rest.Repository
         public ICollection<Recipe> GetRecipes()
         {
             return _dataContext.Recipes.ToList();
+        }
+
+        public ICollection<Recipe> GetSearch(string word)
+        {
+            return _dataContext.Recipes.Where(r => EF.Functions.Like(r.Name, $"%{word}%")).ToList();
         }
 
         public bool RecipeExists(int id)
@@ -70,8 +88,8 @@ namespace Recipe_web_rest.Repository
             {
                 var recipe_ingredient = new Recipe_Ingredient()
                 {
-                    Recipe = recipe,
-                    Ingredient = ingredient
+                    RecipeId = recipe.Id,
+                    IngredientId = ingredient.Id
                 };
                 _dataContext.Add(recipe_ingredient);
             }
