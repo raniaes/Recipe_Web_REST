@@ -12,7 +12,9 @@ Moreover, this program is a team project developed by two people, and the APIs c
 3. Recipe:
 4. Review:
 5. User:
-6. Recipe_Ingredient: 
+6. Recipe_Ingredient:
+
+![Description of Image](/dbDIagram.png)   
 
 ## REST API Documentation
 
