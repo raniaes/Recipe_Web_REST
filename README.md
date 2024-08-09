@@ -4,7 +4,7 @@
 This program is a dedicated REST API for a recipe web application built using the .NET Entity Framework. 
 These APIs handle client requests to a Microsoft SQL Server database to Get (Read), Post (Create), Put (Update), and Delete (Delete) data. 
 Additionally, the APIs are customized to suit the specific data requirements of the recipe web application, ensuring efficient and accurate data management.
-This project is team project. Hence, the contributions of the team members to this program are detailed in the Endpoints section below.
+This project is team project. Hence, the contributions of the team members to this program are detailed in the `Endpoints` section below.
 
 ## Model Structure
 1. Category: This is the model for food categories, such as dinner, lunch, breakfast, dessert, etc.
